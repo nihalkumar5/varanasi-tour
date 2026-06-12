@@ -45,16 +45,25 @@ const locations = Object.keys(locationData);
 export default function Discover() {
   const [currentLocation, setCurrentLocation] = useState("Dashashwamedh Ghat");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [showLocationWarning, setShowLocationWarning] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     // Attempt to get user's location on mount
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          // In a real app, we'd use a Reverse Geocoding API or math distance to landmarks.
-          // Here, we simulate detecting a location based on GPS success.
-          // For the sake of the demo, we'll auto-select Assi Ghat if they allow location.
-          setCurrentLocation("Assi Ghat");
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          
+          // Varanasi bounding box roughly 25.2 to 25.4 N, 82.9 to 83.1 E
+          const isVaranasi = lat >= 25.1 && lat <= 25.5 && lng >= 82.8 && lng <= 83.2;
+          
+          if (!isVaranasi) {
+            setShowLocationWarning(true);
+          } else {
+            setCurrentLocation("Assi Ghat");
+          }
         },
         (error) => {
           console.log("Geolocation error or denied:", error);
@@ -145,7 +154,13 @@ export default function Discover() {
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" placeholder={`Find services near ${currentLocation}`} className={styles.searchInput} />
+            <input 
+              type="text" 
+              placeholder={`Find services near ${currentLocation}`} 
+              className={styles.searchInput}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
             <button className={styles.filterBtn}>
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -153,19 +168,23 @@ export default function Discover() {
             </button>
           </div>
         </div>
+
+        {/* Chips inside image area */}
+        <div className={styles.chipsWrapper}>
+          {["Temples", "Ghats", "Food", "Boat Rides"].map((chip) => (
+            <button 
+              key={chip}
+              className={`${styles.chip} ${searchQuery === chip ? styles.chipActive : ''}`}
+              onClick={() => setSearchQuery(chip)}
+            >
+              {chip}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Main Content Area */}
       <div className={styles.mainContent}>
-
-        {/* Chips */}
-        <div className={styles.chipsWrapper}>
-          <button className={`${styles.chip} ${styles.chipActive}`}>All</button>
-          <button className={styles.chip}>Temples</button>
-          <button className={styles.chip}>Ghats</button>
-          <button className={styles.chip}>Food</button>
-          <button className={styles.chip}>Boat Rides</button>
-        </div>
         
         {/* Categories Header */}
         <div className={styles.locationHeader}>
@@ -239,6 +258,30 @@ export default function Discover() {
         </div>
 
       </div>
+
+      {/* Location Warning Modal */}
+      {showLocationWarning && (
+        <div className={styles.warningOverlay}>
+          <div className={styles.warningModal}>
+            <div className={styles.warningIcon}>
+              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <h3 className={styles.warningTitle}>Not in Varanasi?</h3>
+            <p className={styles.warningDesc}>
+              We detected that you are outside Varanasi. Features like nearby distances and auto-location may not work accurately. Do you still want to continue?
+            </p>
+            <div className={styles.warningActions}>
+              <button className={styles.warningBtnPrimary} onClick={() => setShowLocationWarning(false)}>
+                Yes, Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Floating Footer Nav */}
       {!isDropdownOpen && <FloatingFooter />}

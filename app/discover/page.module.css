@@ -1,23 +1,25 @@
 .container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - 40px);
   width: 100%;
   background-color: #FFF0E6;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: #111;
   max-width: 480px;
-  margin: 0 auto;
+  margin: 20px auto;
   position: relative;
-  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+  box-shadow: 0 0 40px rgba(0,0,0,0.1);
   padding-bottom: 100px;
+  border-radius: 40px;
+  overflow: hidden;
 }
 
 /* Top Illustration Area */
 .topIllustrationArea {
   position: relative;
   width: 100%;
-  height: 280px;
+  height: 330px;
   background-color: #e5f1ec;
   overflow: hidden;
 }
@@ -241,7 +243,7 @@
 /* Search Bar (Inside Hero) */
 .searchWrapper {
   position: absolute;
-  bottom: 20px;
+  bottom: 75px;
   left: 1.5rem;
   right: 1.5rem;
   z-index: 3;
@@ -285,13 +287,16 @@
 
 /* Chips */
 .chipsWrapper {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
   display: flex;
   gap: 0.8rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-bottom: 0.5rem;
-  margin: -0.5rem -1.5rem 0 -1.5rem;
-  padding: 0 1.5rem 0.5rem 1.5rem;
+  padding: 0 1.5rem;
+  z-index: 3;
 }
 
 .chipsWrapper::-webkit-scrollbar {
@@ -299,24 +304,27 @@
 }
 
 .chip {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  color: #111;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
   padding: 0.5rem 1.2rem;
   border-radius: 30px;
   font-size: 0.85rem;
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.2s;
   scroll-snap-align: start;
 }
 
 .chipActive {
-  background: #111111;
-  color: #ffffff;
-  border-color: #111111;
+  background: rgba(255, 255, 255, 0.95);
+  color: #111111;
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 /* Main Content Area */
@@ -413,8 +421,8 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding-bottom: 0.5rem;
-  margin: 0 -1.5rem;
-  padding: 0 1.5rem 1rem 1.5rem;
+  /* margin: 0 -1.5rem; */ /* Removed so cards don't stick to screen edge */
+  /* padding: 0 1.5rem 1rem 1.5rem; */
 }
 
 .horizontalScroll::-webkit-scrollbar {
