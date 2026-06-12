@@ -148,45 +148,8 @@ export default function Discover() {
                 </span>
               </div>
             </button>
-            
-            {isDropdownOpen && (
-              <div className={styles.dropdownOverlay} onClick={() => setIsDropdownOpen(false)}>
-                <div className={styles.dropdownMenu} onClick={(e) => e.stopPropagation()}>
-                  <div className={styles.dropdownHeader}>
-                    <h3 className={styles.dropdownTitle}>Select Location</h3>
-                    <button className={styles.closeBtn} onClick={() => setIsDropdownOpen(false)}>
-                      ✕
-                    </button>
-                  </div>
-                  {locations.map((loc) => (
-                    <button 
-                      key={loc}
-                      className={`${styles.dropdownItem} ${currentLocation === loc ? styles.activeItem : ''}`}
-                      onClick={() => {
-                        if (loc !== currentLocation) {
-                          let dist = "5.0"; // Fallback distance
-                          if (userCoords && locationCoords[loc]) {
-                            dist = calculateDistance(userCoords.lat, userCoords.lng, locationCoords[loc].lat, locationCoords[loc].lng);
-                          } else if (locationCoords[currentLocation] && locationCoords[loc]) {
-                            // If no user location, calculate distance from current selected location as fallback
-                            dist = calculateDistance(locationCoords[currentLocation].lat, locationCoords[currentLocation].lng, locationCoords[loc].lat, locationCoords[loc].lng);
-                          }
-                          setMockDistance(dist);
-                          setPendingLocation(loc);
-                          setShowDistanceWarning(true);
-                          setIsDropdownOpen(false);
-                        } else {
-                          setIsDropdownOpen(false);
-                        }
-                      }}
-                    >
-                      <Icons.MapPin /> {loc}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
+          
           <div className={styles.avatar} onClick={() => setIsProfileOpen(true)} style={{cursor: 'pointer'}}>
             <Image src="/service_vip.png" alt="Profile" fill className={styles.avatarImg} />
           </div>
@@ -424,10 +387,14 @@ export default function Discover() {
       {showDistanceWarning && pendingLocation && (
         <div className={styles.modalOverlay} onClick={() => setShowDistanceWarning(false)}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <div className={styles.warningIcon}>📍</div>
+            <div className={styles.modalIconWrapper}>
+              <div className={styles.modalIconBg}>
+                <Icons.MapPin />
+              </div>
+            </div>
             <h3 className={styles.modalTitle}>Change Location?</h3>
             <p className={styles.modalText}>
-              <strong>{pendingLocation}</strong> is approximately <strong>{mockDistance} km</strong> away from your current location. Do you still want to continue?
+              <strong>{pendingLocation}</strong> is approximately <span className={styles.highlightText}>{mockDistance} km</span> away from your current location. Do you still want to continue?
             </p>
             <div className={styles.modalActions}>
               <button className={styles.outlineBtn} onClick={() => setShowDistanceWarning(false)}>
@@ -443,6 +410,45 @@ export default function Discover() {
                 Continue
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Location Selection Dropdown Overlay */}
+      {isDropdownOpen && (
+        <div className={styles.dropdownOverlay} onClick={() => setIsDropdownOpen(false)}>
+          <div className={styles.dropdownMenu} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.dropdownHeader}>
+              <h3 className={styles.dropdownTitle}>Select Location</h3>
+              <button className={styles.closeBtn} onClick={() => setIsDropdownOpen(false)}>
+                ✕
+              </button>
+            </div>
+            {locations.map((loc) => (
+              <button 
+                key={loc}
+                className={`${styles.dropdownItem} ${currentLocation === loc ? styles.activeItem : ''}`}
+                onClick={() => {
+                  if (loc !== currentLocation) {
+                    let dist = "5.0"; // Fallback distance
+                    if (userCoords && locationCoords[loc]) {
+                      dist = calculateDistance(userCoords.lat, userCoords.lng, locationCoords[loc].lat, locationCoords[loc].lng);
+                    } else if (locationCoords[currentLocation] && locationCoords[loc]) {
+                      // If no user location, calculate distance from current selected location as fallback
+                      dist = calculateDistance(locationCoords[currentLocation].lat, locationCoords[currentLocation].lng, locationCoords[loc].lat, locationCoords[loc].lng);
+                    }
+                    setMockDistance(dist);
+                    setPendingLocation(loc);
+                    setShowDistanceWarning(true);
+                    setIsDropdownOpen(false);
+                  } else {
+                    setIsDropdownOpen(false);
+                  }
+                }}
+              >
+                <Icons.MapPin /> {loc}
+              </button>
+            ))}
           </div>
         </div>
       )}
