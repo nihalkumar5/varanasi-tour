@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import FloatingFooter from "../components/FloatingFooter";
 
@@ -13,9 +14,55 @@ const Icons = {
   Taxi: () => <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>,
   Camera: () => <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>,
   Hotel: () => <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/><path d="M10 9h.01"/><path d="M14 9h.01"/><path d="M10 13h.01"/><path d="M14 13h.01"/></svg>,
+  MapPin: () => <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>,
+  ChevronDown: () => <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>,
+  Menu: () => <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
 };
 
+// Mock Database for different locations
+const locationData: Record<string, any[]> = {
+  "Dashashwamedh Ghat": [
+    { id: 1, title: "Ganga Aarti", desc: "Experience the mesmerizing evening rituals at Dasaswamedh Ghat.", rating: "4.9", reviews: "1.2k+", price: "₹299", image: "/varanasighat.png" },
+    { id: 2, title: "Sunrise Boat Ride", desc: "Witness the magical sunrise over the sacred Ganges river.", rating: "4.8", reviews: "850+", price: "₹499", image: "/hero_aarti.png" },
+    { id: 3, title: "Temple Tour", desc: "Explore the ancient and holiest temples scattered across Kashi.", rating: "4.7", reviews: "500+", price: "₹699", image: "/varanasighat.png" },
+  ],
+  "Assi Ghat": [
+    { id: 4, title: "Subah-e-Banaras", desc: "Start your day with morning yoga, classical music, and boat ride.", rating: "4.9", reviews: "2k+", price: "Free", image: "/hero_aarti.png" },
+    { id: 5, title: "Evening Cafe Hop", desc: "Explore the vibrant cafe culture and street food near Assi.", rating: "4.6", reviews: "450+", price: "₹500", image: "/varanasighat.png" },
+  ],
+  "Sarnath": [
+    { id: 6, title: "Dhamek Stupa Tour", desc: "Visit the exact spot where Buddha gave his first sermon.", rating: "4.8", reviews: "3k+", price: "₹150", image: "/varanasighat.png" },
+    { id: 7, title: "Archaeological Museum", desc: "Explore ancient Buddhist relics and the famous Lion Capital.", rating: "4.7", reviews: "900+", price: "₹50", image: "/hero_aarti.png" },
+  ],
+  "Kashi Vishwanath": [
+    { id: 8, title: "Temple VIP Darshan", desc: "Skip the lines for a peaceful darshan at the holy temple.", rating: "4.9", reviews: "5k+", price: "₹1100", image: "/varanasighat.png" },
+    { id: 9, title: "Corridor Heritage Walk", desc: "Take a guided walk through the newly built Vishwanath Corridor.", rating: "4.8", reviews: "1.5k+", price: "₹200", image: "/hero_aarti.png" },
+  ]
+};
+
+const locations = Object.keys(locationData);
+
 export default function Discover() {
+  const [currentLocation, setCurrentLocation] = useState("Dashashwamedh Ghat");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    // Attempt to get user's location on mount
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // In a real app, we'd use a Reverse Geocoding API or math distance to landmarks.
+          // Here, we simulate detecting a location based on GPS success.
+          // For the sake of the demo, we'll auto-select Assi Ghat if they allow location.
+          setCurrentLocation("Assi Ghat");
+        },
+        (error) => {
+          console.log("Geolocation error or denied:", error);
+        }
+      );
+    }
+  }, []);
+
   const services = [
     { id: "boat", name: "Boat Ride", icon: <Icons.Boat />, link: "/boat" },
     { id: "aarti", name: "Ganga Aarti", icon: <Icons.Aarti />, link: "/aarti" },
@@ -25,35 +72,7 @@ export default function Discover() {
     { id: "hotel", name: "Hotel", icon: <Icons.Hotel />, link: "/hotel" },
   ];
 
-  const popularToday = [
-    { 
-      id: 1, 
-      title: "Ganga Aarti", 
-      desc: "Experience the mesmerizing evening rituals at Dasaswamedh Ghat.",
-      rating: "4.9", 
-      reviews: "1.2k+", 
-      price: "₹299", 
-      image: "/varanasighat.png" 
-    },
-    { 
-      id: 2, 
-      title: "Sunrise Boat Ride", 
-      desc: "Witness the magical sunrise over the sacred Ganges river.",
-      rating: "4.8", 
-      reviews: "850+", 
-      price: "₹499", 
-      image: "/hero_aarti.png" 
-    },
-    { 
-      id: 3, 
-      title: "Temple Tour", 
-      desc: "Explore the ancient and holiest temples scattered across Kashi.",
-      rating: "4.7", 
-      reviews: "500+", 
-      price: "₹699", 
-      image: "/varanasighat.png" 
-    },
-  ];
+  const popularToday = locationData[currentLocation] || locationData["Dashashwamedh Ghat"];
 
   return (
     <div className={styles.container}>
@@ -70,11 +89,49 @@ export default function Discover() {
         <div className={styles.heroOverlay}></div>
         
         <div className={styles.header}>
-          <div className={styles.logoArea}>
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" className={styles.logoIcon}>
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-            </svg>
-            <span className={styles.logoText}>KashiApp</span>
+          <button className={styles.menuBtn}>
+            <Icons.Menu />
+          </button>
+
+          <div className={styles.locationDropdownContainer}>
+            <button 
+              className={styles.locationSelectorBtn} 
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              <div className={styles.locationIconWrapper}>
+                <Icons.MapPin />
+              </div>
+              <div className={styles.locationTextWrapper}>
+                <span className={styles.locationValue}>
+                  {currentLocation} <Icons.ChevronDown />
+                </span>
+              </div>
+            </button>
+            
+            {isDropdownOpen && (
+              <div className={styles.dropdownOverlay} onClick={() => setIsDropdownOpen(false)}>
+                <div className={styles.dropdownMenu} onClick={(e) => e.stopPropagation()}>
+                  <div className={styles.dropdownHeader}>
+                    <h3 className={styles.dropdownTitle}>Select Location</h3>
+                    <button className={styles.closeBtn} onClick={() => setIsDropdownOpen(false)}>
+                      ✕
+                    </button>
+                  </div>
+                  {locations.map((loc) => (
+                    <button 
+                      key={loc}
+                      className={`${styles.dropdownItem} ${currentLocation === loc ? styles.activeItem : ''}`}
+                      onClick={() => {
+                        setCurrentLocation(loc);
+                        setIsDropdownOpen(false);
+                      }}
+                    >
+                      <Icons.MapPin /> {loc}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           <div className={styles.avatar}>
             <Image src="/service_vip.png" alt="Profile" fill className={styles.avatarImg} />
@@ -88,7 +145,7 @@ export default function Discover() {
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" placeholder="Find services, food, & places" className={styles.searchInput} />
+            <input type="text" placeholder={`Find services near ${currentLocation}`} className={styles.searchInput} />
             <button className={styles.filterBtn}>
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -110,10 +167,10 @@ export default function Discover() {
           <button className={styles.chip}>Boat Rides</button>
         </div>
         
-        {/* Location Header */}
+        {/* Categories Header */}
         <div className={styles.locationHeader}>
-          <h2 className={styles.locationTitle}>📍 Assi Ghat</h2>
-          <p className={styles.locationSubtitle}>Popular Nearby</p>
+          <h2 className={styles.locationTitle}>Categories</h2>
+          <p className={styles.locationSubtitle}>Explore all services</p>
         </div>
 
         {/* Services Grid */}
@@ -184,7 +241,7 @@ export default function Discover() {
       </div>
 
       {/* Floating Footer Nav */}
-      <FloatingFooter />
+      {!isDropdownOpen && <FloatingFooter />}
     </div>
   );
 }
