@@ -1,7 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
   background: linear-gradient(180deg, #FFF0E0 0%, #FF9E5E 60%, #D44500 85%, #8B2500 100%);
   background-color: #FFF0E0; /* Fallback */
   color: #ffffff;
@@ -15,8 +16,9 @@
 /* Marquee Area */
 .marqueeWrapper {
   display: flex;
+  flex: 1;
+  min-height: 0;
   gap: 1rem;
-  height: 540px;
   overflow: hidden;
   position: relative;
   margin-top: 0rem;
