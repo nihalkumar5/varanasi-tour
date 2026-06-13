@@ -198,12 +198,12 @@ export default function Discover() {
   };
 
   const services = [
-    { id: "boat", name: "Boat Ride", icon: <Icons.Boat />, link: "/boat" },
-    { id: "aarti", name: "Ganga Aarti", icon: <Icons.Aarti />, link: "/aarti" },
-    { id: "guide", name: "Local Guide", icon: <Icons.Guide />, link: "/guide" },
-    { id: "taxi", name: "Taxi", icon: <Icons.Taxi />, link: "/taxi" },
-    { id: "photo", name: "Photography", icon: <Icons.Camera />, link: "/photo" },
-    { id: "hotel", name: "Hotel", icon: <Icons.Hotel />, link: "/hotel" },
+    { id: "boat", name: "Boat Ride", icon: <Icons.Boat />, link: "/category/boat" },
+    { id: "aarti", name: "Ganga Aarti", icon: <Icons.Aarti />, link: "/category/aarti" },
+    { id: "guide", name: "Local Guide", icon: <Icons.Guide />, link: "/category/guide" },
+    { id: "taxi", name: "Taxi", icon: <Icons.Taxi />, link: "/category/taxi" },
+    { id: "photo", name: "Photography", icon: <Icons.Camera />, link: "/category/photo" },
+    { id: "hotel", name: "Hotel", icon: <Icons.Hotel />, link: "/category/hotel" },
   ];
 
   const popularToday = locationData[currentLocation] || locationData["Dashashwamedh Ghat"];
@@ -383,6 +383,41 @@ export default function Discover() {
         {renderSection("Handpicked Experiences", handpickedExperiences)}
         {renderSection("Local Cuisine & Food Joints", localCuisine)}
         {renderSection("Upcoming Festivals", upcomingEvents)}
+
+        {/* Why viaKashi Section */}
+        <div className={styles.whySection}>
+          <h3 className={styles.sectionTitle}>Why viaKashi?</h3>
+          <div className={styles.whyGrid}>
+            <div className={styles.whyCard}>
+              <div className={styles.whyIcon}>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <h4 className={styles.whyCardTitle}>Verified Local Guides</h4>
+              <p className={styles.whyDesc}>Only certified guides to ensure safe & authentic experiences.</p>
+            </div>
+            <div className={styles.whyCard}>
+              <div className={styles.whyIcon}>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <h4 className={styles.whyCardTitle}>24/7 Ground Support</h4>
+              <p className={styles.whyDesc}>Our local team is always available to assist you in Varanasi.</p>
+            </div>
+            <div className={styles.whyCard}>
+              <div className={styles.whyIcon}>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <h4 className={styles.whyCardTitle}>Lowest Price Guarantee</h4>
+              <p className={styles.whyDesc}>Get the best rates on boat rides and taxi bookings.</p>
+            </div>
+            <div className={styles.whyCard}>
+              <div className={styles.whyIcon}>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <h4 className={styles.whyCardTitle}>Curated Experiences</h4>
+              <p className={styles.whyDesc}>Handpicked tours that show you the real heart of Kashi.</p>
+            </div>
+          </div>
+        </div>
 
         {/* Traveler Stories / Testimonials */}
         <div className={styles.popularSection}>
