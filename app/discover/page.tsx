@@ -20,7 +20,8 @@ const Icons = {
   Hotel: () => <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/><path d="M10 9h.01"/><path d="M14 9h.01"/><path d="M10 13h.01"/><path d="M14 13h.01"/></svg>,
   MapPin: () => <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>,
   ChevronDown: () => <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>,
-  Menu: () => <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+  Menu: () => <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>,
+  Crosshair: () => <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
 };
 
 // Mock Database for different locations
@@ -94,7 +95,17 @@ export default function Discover() {
           if (!isVaranasi) {
             setShowLocationWarning(true);
           } else {
-            setCurrentLocation("Assi Ghat");
+            let closestLoc = "Dashashwamedh Ghat";
+            let minDist = Infinity;
+            for (const loc of locations) {
+              const coords = locationCoords[loc];
+              const dist = parseFloat(calculateDistance(lat, lng, coords.lat, coords.lng));
+              if (dist < minDist) {
+                minDist = dist;
+                closestLoc = loc;
+              }
+            }
+            setCurrentLocation(closestLoc);
           }
         },
         (error) => {
@@ -103,6 +114,36 @@ export default function Discover() {
       );
     }
   }, []);
+
+  const handleUseCurrentLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          setUserCoords({ lat, lng });
+          
+          let closestLoc = "Dashashwamedh Ghat";
+          let minDist = Infinity;
+          for (const loc of locations) {
+            const coords = locationCoords[loc];
+            const dist = parseFloat(calculateDistance(lat, lng, coords.lat, coords.lng));
+            if (dist < minDist) {
+              minDist = dist;
+              closestLoc = loc;
+            }
+          }
+          setCurrentLocation(closestLoc);
+          setIsDropdownOpen(false);
+        },
+        (error) => {
+          alert("Please enable location permissions to use this feature.");
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by your browser.");
+    }
+  };
 
   const services = [
     { id: "boat", name: "Boat Ride", icon: <Icons.Boat />, link: "/boat" },
@@ -394,7 +435,7 @@ export default function Discover() {
             </div>
             <h3 className={styles.modalTitle}>Change Location?</h3>
             <p className={styles.modalText}>
-              <strong>{pendingLocation}</strong> is approximately <span className={styles.highlightText}>{mockDistance} km</span> away from your current location. Do you still want to continue?
+              <strong>{pendingLocation}</strong> is approximately <span className={styles.highlightText}>{mockDistance} km</span> away from {currentLocation}. Do you still want to continue?
             </p>
             <div className={styles.modalActions}>
               <button className={styles.outlineBtn} onClick={() => setShowDistanceWarning(false)}>
@@ -424,23 +465,34 @@ export default function Discover() {
                 ✕
               </button>
             </div>
+            <button className={styles.currentLocationBtn} onClick={handleUseCurrentLocation}>
+              <Icons.Crosshair /> Use Current Location
+            </button>
             {locations.map((loc) => (
               <button 
                 key={loc}
                 className={`${styles.dropdownItem} ${currentLocation === loc ? styles.activeItem : ''}`}
                 onClick={() => {
                   if (loc !== currentLocation) {
-                    let dist = "5.0"; // Fallback distance
-                    if (userCoords && locationCoords[loc]) {
-                      dist = calculateDistance(userCoords.lat, userCoords.lng, locationCoords[loc].lat, locationCoords[loc].lng);
-                    } else if (locationCoords[currentLocation] && locationCoords[loc]) {
-                      // If no user location, calculate distance from current selected location as fallback
-                      dist = calculateDistance(locationCoords[currentLocation].lat, locationCoords[currentLocation].lng, locationCoords[loc].lat, locationCoords[loc].lng);
+                    let dist = "0.0";
+                    if (locationCoords[currentLocation] && locationCoords[loc]) {
+                      dist = calculateDistance(
+                        locationCoords[currentLocation].lat, 
+                        locationCoords[currentLocation].lng, 
+                        locationCoords[loc].lat, 
+                        locationCoords[loc].lng
+                      );
                     }
-                    setMockDistance(dist);
-                    setPendingLocation(loc);
-                    setShowDistanceWarning(true);
-                    setIsDropdownOpen(false);
+                    
+                    if (parseFloat(dist) > 1.0) {
+                      setMockDistance(dist);
+                      setPendingLocation(loc);
+                      setShowDistanceWarning(true);
+                      setIsDropdownOpen(false);
+                    } else {
+                      setCurrentLocation(loc);
+                      setIsDropdownOpen(false);
+                    }
                   } else {
                     setIsDropdownOpen(false);
                   }

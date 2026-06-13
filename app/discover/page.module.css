@@ -227,6 +227,28 @@
   color: #FF512F;
 }
 
+.currentLocationBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 16px;
+  border: 1.5px dashed #FF512F;
+  background: #fffcfb;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #FF512F;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 0.5rem;
+}
+
+.currentLocationBtn:active {
+  transform: scale(0.98);
+}
+
 .avatar {
   position: relative;
   width: 40px;
