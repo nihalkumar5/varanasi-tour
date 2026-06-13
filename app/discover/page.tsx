@@ -52,6 +52,30 @@ const locationCoords: Record<string, { lat: number; lng: number }> = {
   "Kashi Vishwanath": { lat: 25.3109, lng: 83.0107 },
 };
 
+const upcomingEvents = [
+  { id: 101, title: "Dev Deepawali", desc: "Millions of diyas light up the ghats in this majestic festival.", rating: "5.0", reviews: "10k+", price: "Free", image: "https://picsum.photos/seed/kashi1/600/400" },
+  { id: 102, title: "Maha Shivaratri", desc: "Grand celebrations at Kashi Vishwanath with night prayers.", rating: "4.9", reviews: "25k+", price: "Free", image: "https://picsum.photos/seed/kashi2/600/400" },
+  { id: 103, title: "Dhrupad Mela", desc: "A 5-day Indian classical music festival on the Ganges.", rating: "4.8", reviews: "5k+", price: "₹200", image: "https://picsum.photos/seed/kashi3/600/400" }
+];
+
+const handpickedExperiences = [
+  { id: 201, title: "Silk Weaving Tour", desc: "Watch artisans weave the famous Banarasi silk sarees.", rating: "4.9", reviews: "800+", price: "₹399", image: "https://picsum.photos/seed/kashi4/600/400" },
+  { id: 202, title: "Heritage Walk", desc: "Explore the narrow, maze-like alleys of old Kashi.", rating: "4.8", reviews: "1.2k+", price: "₹299", image: "https://picsum.photos/seed/kashi5/600/400" },
+  { id: 203, title: "Aghori Ashram Visit", desc: "Learn about the mystical Aghori traditions across the river.", rating: "4.7", reviews: "400+", price: "₹500", image: "https://picsum.photos/seed/kashi6/600/400" }
+];
+
+const localCuisine = [
+  { id: 301, title: "Blue Lassi Shop", desc: "Famous for hand-churned fruit lassis since generations.", rating: "4.9", reviews: "3k+", price: "₹80", image: "https://picsum.photos/seed/kashi7/600/400" },
+  { id: 302, title: "Kashi Chaat Bhandar", desc: "The ultimate destination for Tamatar Chaat and Golgappas.", rating: "4.8", reviews: "5k+", price: "₹60", image: "https://picsum.photos/seed/kashi8/600/400" },
+  { id: 303, title: "Ram Bhandar", desc: "Best morning Kachori-Sabzi and Jalebi in Varanasi.", rating: "4.7", reviews: "2k+", price: "₹50", image: "https://picsum.photos/seed/kashi9/600/400" }
+];
+
+const testimonials = [
+  { id: 401, name: "Sarah Jenkins", role: "Solo Traveler", text: "The boat ride at dawn was the most magical experience of my life. Highly recommend viaKashi for bookings!", image: "https://i.pravatar.cc/150?img=1" },
+  { id: 402, name: "Arjun Mehta", role: "Photographer", text: "Found the best hidden spots for photography thanks to the curated heritage walk.", image: "https://i.pravatar.cc/150?img=11" },
+  { id: 403, name: "Elena Rostova", role: "Food Blogger", text: "The local cuisine suggestions were spot on. Blue Lassi is an absolute must-visit!", image: "https://i.pravatar.cc/150?img=5" }
+];
+
 function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): string {
   const R = 6371; // Radius of the earth in km
   const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -156,6 +180,65 @@ export default function Discover() {
 
   const popularToday = locationData[currentLocation] || locationData["Dashashwamedh Ghat"];
 
+  const renderSection = (title: string, data: any[]) => (
+    <div className={styles.popularSection}>
+      <h3 className={styles.sectionTitle}>{title}</h3>
+      <div className={styles.horizontalScroll}>
+        {data.map((item) => (
+          <div key={item.id} className={styles.popularCard}>
+            
+            <div className={styles.cardImageWrapper}>
+              <img 
+                src={item.image} 
+                alt={item.title} 
+                className={styles.popularCardImg} 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+              />
+            </div>
+            
+            <div className={styles.cardContent}>
+              <h4 className={styles.cardTitle}>{item.title}</h4>
+              <p className={styles.cardDesc}>{item.desc}</p>
+              
+              <div className={styles.cardStats}>
+                <div className={styles.statItem}>
+                  <span className={styles.statValue}>⭐ {item.rating}</span>
+                  <span className={styles.statLabel}>Rating</span>
+                </div>
+                <div className={styles.statDivider}></div>
+                <div className={styles.statItem}>
+                  <span className={styles.statValue}>{item.reviews}</span>
+                  <span className={styles.statLabel}>Reviews</span>
+                </div>
+                <div className={styles.statDivider}></div>
+                <div className={styles.statItem}>
+                  <span className={styles.statValue}>{item.price}</span>
+                  <span className={styles.statLabel}>Price</span>
+                </div>
+              </div>
+
+              <Link 
+                href={{ 
+                  pathname: '/book', 
+                  query: { 
+                    title: item.title, 
+                    price: item.price.replace(/[^0-9]/g, ''), 
+                    image: item.image,
+                    location: 'Varanasi, India'
+                  } 
+                }} 
+                className={styles.cardActionBtn}
+              >
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Book Now
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <div className={styles.container}>
       {/* Top Header & Illustration Area */}
@@ -237,6 +320,19 @@ export default function Discover() {
       {/* Main Content Area */}
       <div className={styles.mainContent}>
         
+        {/* Offer Marquee */}
+        <div className={styles.offerMarqueeContainer}>
+          <div className={styles.offerMarquee}>
+            <span>🌟 FLAT 20% OFF ON ALL BOAT RIDES! USE CODE: KASHI20 🌟</span>
+            <span>🎉 BOOK 2 HERITAGE WALKS, GET 1 FREE! 🎉</span>
+            <span>✨ SPECIAL DISCOUNTS ON GROUP AARTI BOOKINGS! ✨</span>
+            {/* Duplicate for infinite scroll effect */}
+            <span>🌟 FLAT 20% OFF ON ALL BOAT RIDES! USE CODE: KASHI20 🌟</span>
+            <span>🎉 BOOK 2 HERITAGE WALKS, GET 1 FREE! 🎉</span>
+            <span>✨ SPECIAL DISCOUNTS ON GROUP AARTI BOOKINGS! ✨</span>
+          </div>
+        </div>
+
         {/* Categories Header */}
         <div className={styles.locationHeader}>
           <h2 className={styles.locationTitle}>Categories</h2>
@@ -255,60 +351,48 @@ export default function Discover() {
           ))}
         </div>
 
-        {/* Popular Today Section */}
-        <div className={styles.popularSection}>
-          <h3 className={styles.sectionTitle}>Popular Today</h3>
-          <div className={styles.horizontalScroll}>
-            {popularToday.map((item) => (
-              <div key={item.id} className={styles.popularCard}>
-                
-                <div className={styles.cardImageWrapper}>
-                  <Image src={item.image} alt={item.title} fill className={styles.popularCardImg} />
-                </div>
-                
-                <div className={styles.cardContent}>
-                  <h4 className={styles.cardTitle}>{item.title}</h4>
-                  <p className={styles.cardDesc}>{item.desc}</p>
-                  
-                  <div className={styles.cardStats}>
-                    <div className={styles.statItem}>
-                      <span className={styles.statValue}>⭐ {item.rating}</span>
-                      <span className={styles.statLabel}>Rating</span>
-                    </div>
-                    <div className={styles.statDivider}></div>
-                    <div className={styles.statItem}>
-                      <span className={styles.statValue}>{item.reviews}</span>
-                      <span className={styles.statLabel}>Reviews</span>
-                    </div>
-                    <div className={styles.statDivider}></div>
-                    <div className={styles.statItem}>
-                      <span className={styles.statValue}>{item.price}</span>
-                      <span className={styles.statLabel}>Price</span>
-                    </div>
-                  </div>
+        {renderSection("Popular Today", popularToday)}
+        {renderSection("Handpicked Experiences", handpickedExperiences)}
+        {renderSection("Local Cuisine & Food Joints", localCuisine)}
+        {renderSection("Upcoming Festivals", upcomingEvents)}
 
-                  <Link 
-                    href={{ 
-                      pathname: '/book', 
-                      query: { 
-                        title: item.title, 
-                        price: item.price.replace(/[^0-9]/g, ''), 
-                        image: item.image,
-                        location: 'Varanasi, India'
-                      } 
-                    }} 
-                    className={styles.cardActionBtn}
-                  >
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    Book Now
-                  </Link>
+        {/* Traveler Stories / Testimonials */}
+        <div className={styles.popularSection}>
+          <h3 className={styles.sectionTitle}>Stories from Kashi</h3>
+          <div className={styles.horizontalScroll}>
+            {testimonials.map((testimonial) => (
+              <div key={testimonial.id} className={styles.testimonialCard}>
+                <div className={styles.testimonialHeader}>
+                  <img src={testimonial.image} alt={testimonial.name} className={styles.testimonialAvatar} />
+                  <div>
+                    <h4 className={styles.testimonialName}>{testimonial.name}</h4>
+                    <p className={styles.testimonialRole}>{testimonial.role}</p>
+                  </div>
                 </div>
+                <p className={styles.testimonialText}>"{testimonial.text}"</p>
               </div>
             ))}
           </div>
         </div>
 
       </div>
+
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <div className={styles.footerContent}>
+          <h3 className={`${styles.footerLogo} ${playfair.className}`}>via<span className={caveat.className}>Kashi</span></h3>
+          <p className={styles.footerDesc}>Your ultimate companion for exploring the spiritual capital of India.</p>
+          <div className={styles.footerLinks}>
+            <Link href="#">About Us</Link>
+            <Link href="#">Contact</Link>
+            <Link href="#">Terms & Conditions</Link>
+            <Link href="#">Privacy Policy</Link>
+          </div>
+          <div className={styles.footerCopyright}>
+            © {new Date().getFullYear()} viaKashi. All rights reserved.
+          </div>
+        </div>
+      </footer>
 
       {/* Location Warning Modal */}
       {showLocationWarning && (

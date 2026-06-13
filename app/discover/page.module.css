@@ -919,3 +919,137 @@
 .primaryBtn:active {
   transform: scale(0.98);
 }
+
+/* Offer Marquee */
+.offerMarqueeContainer {
+  width: 100%;
+  overflow: hidden;
+  background: #FF512F;
+  color: white;
+  padding: 0.75rem 0;
+  white-space: nowrap;
+  position: relative;
+  display: flex;
+  margin-top: 1rem;
+}
+
+.offerMarquee {
+  display: flex;
+  gap: 2rem;
+  animation: marquee 15s linear infinite;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Testimonials */
+.testimonialCard {
+  min-width: 280px;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.testimonialHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.testimonialAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.testimonialName {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+}
+
+.testimonialRole {
+  font-size: 0.75rem;
+  color: #666;
+  margin: 0;
+}
+
+.testimonialText {
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.5;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Footer */
+.footer {
+  margin-top: 2rem;
+  background: #111;
+  color: white;
+  padding: 3rem 1.5rem 2rem 1.5rem;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.footerLogo {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.footerLogo span {
+  color: #FF512F;
+}
+
+.footerDesc {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin: 0;
+  max-width: 280px;
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.footerLinks a {
+  color: #ddd;
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footerCopyright {
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: #666;
+  border-top: 1px solid #333;
+  padding-top: 1.5rem;
+  width: 100%;
+}
+
