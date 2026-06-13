@@ -139,30 +139,59 @@ export default function Discover() {
     }
   }, []);
 
-  const handleUseCurrentLocation = () => {
-    if ("geolocation" in navigator) {
+  const handleUseCurrentLocation = async () => {
+    // 1. Seamless IP-based Geolocation (No permissions, works on HTTP)
+    try {
+      const response = await fetch("https://ipapi.co/json/");
+      const data = await response.json();
+      
+      if (data && data.latitude && data.longitude) {
+        let nearestLocation = "Assi Ghat";
+        let minDistance = Infinity;
+
+        Object.entries(locationCoords).forEach(([locName, coords]) => {
+          const dist = parseFloat(calculateDistance(data.latitude, data.longitude, coords.lat, coords.lng));
+          if (dist < minDistance) {
+            minDistance = dist;
+            nearestLocation = locName;
+          }
+        });
+
+        setCurrentLocation(nearestLocation);
+        setIsDropdownOpen(false);
+        return; // Success!
+      }
+    } catch (e) {
+      console.log("IP Geolocation failed, falling back to browser GPS", e);
+    }
+
+    // 2. Strict Browser GPS Fallback
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
-          setUserCoords({ lat, lng });
-          
-          let closestLoc = "Dashashwamedh Ghat";
-          let minDist = Infinity;
-          for (const loc of locations) {
-            const coords = locationCoords[loc];
-            const dist = parseFloat(calculateDistance(lat, lng, coords.lat, coords.lng));
-            if (dist < minDist) {
-              minDist = dist;
-              closestLoc = loc;
+          const { latitude, longitude } = position.coords;
+          let nearestLocation = "Assi Ghat";
+          let minDistance = Infinity;
+
+          Object.entries(locationCoords).forEach(([locName, coords]) => {
+            const dist = parseFloat(calculateDistance(latitude, longitude, coords.lat, coords.lng));
+            if (dist < minDistance) {
+              minDistance = dist;
+              nearestLocation = locName;
             }
-          }
-          setCurrentLocation(closestLoc);
+          });
+
+          setCurrentLocation(nearestLocation);
           setIsDropdownOpen(false);
         },
         (error) => {
-          alert("Please enable location permissions to use this feature.");
-        }
+          if (!window.isSecureContext) {
+            alert("Geolocation requires a secure connection (HTTPS). On mobile network testing, browsers block this feature on HTTP. Please use ngrok or a secure tunnel.");
+          } else {
+            alert(`Location error: ${error.message}`);
+          }
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     } else {
       alert("Geolocation is not supported by your browser.");
@@ -468,12 +497,12 @@ export default function Discover() {
           <div className={styles.profileDrawer} onClick={(e) => e.stopPropagation()}>
             <div className={styles.hamburgerHeader}>
               <div className={styles.userInfo}>
-                <div className={styles.hamburgerAvatar}>
-                  <Image src="/service_vip.png" alt="Profile" fill className={styles.avatarImg} />
+                <div className={styles.hamburgerAvatar} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f0f0f0' }}>
+                  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 </div>
                 <div>
-                  <h3 className={styles.userName}>Nihal Kumar</h3>
-                  <p className={styles.userPhone}>+91 98765 43210</p>
+                  <h3 className={styles.userName}>Guest User</h3>
+                  <p className={styles.userPhone} style={{ color: "#FF512F", fontWeight: "bold", cursor: "pointer", marginTop: "4px" }}>Sign In to viaKashi</p>
                 </div>
               </div>
               <button className={styles.closeHamburgerBtn} onClick={() => setIsProfileOpen(false)}>
