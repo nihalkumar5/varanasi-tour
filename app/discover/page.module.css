@@ -850,6 +850,37 @@
   height: 32px;
 }
 
+.fallbackList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 1.5rem 0;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.fallbackItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem;
+  background: #F8F9FA;
+  border-radius: 12px;
+  border: 1px solid #EAEAEA;
+  width: 100%;
+  font-weight: 500;
+  color: #333;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.fallbackItem:hover {
+  background: #FFF0ED;
+  border-color: #FF512F;
+  color: #FF512F;
+}
+
 .modalTitle {
   font-size: 1.6rem;
   font-weight: 800;
