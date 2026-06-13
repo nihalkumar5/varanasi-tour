@@ -922,7 +922,9 @@
 
 /* Offer Marquee */
 .offerMarqueeContainer {
-  width: 100%;
+  width: calc(100% + 3rem);
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
   overflow: hidden;
   background: #FF512F;
   color: white;
@@ -930,7 +932,8 @@
   white-space: nowrap;
   position: relative;
   display: flex;
-  margin-top: 1rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
 .offerMarquee {
