@@ -2,25 +2,24 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f5f5f7;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--background);
   padding-bottom: 100px;
 }
 
 .header {
   padding: 1.5rem;
-  background: white;
+  background: var(--surface);
   display: flex;
   align-items: center;
   gap: 1rem;
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--border);
 }
 
 .backBtn {
-  color: #111;
+  color: var(--foreground);
   display: flex;
   align-items: center;
 }
@@ -28,7 +27,7 @@
 .header h1 {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #111;
+  color: var(--foreground);
 }
 
 .main {
@@ -39,17 +38,17 @@
 }
 
 .card {
-  background: white;
+  background: var(--surface);
   border-radius: 20px;
   padding: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  box-shadow: var(--shadow-sm);
 }
 
 .card h2 {
   font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #111;
+  color: var(--foreground);
 }
 
 /* Service Summary */
@@ -62,19 +61,19 @@
 .serviceTitle {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #333;
+  color: var(--foreground);
 }
 
 .providerName {
   font-size: 0.85rem;
-  color: #888;
+  color: var(--foreground-muted);
   margin-top: 0.2rem;
 }
 
 .basePrice {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #111;
+  color: var(--foreground);
 }
 
 /* Date & Time Picker */
@@ -86,16 +85,16 @@
 
 .dateInput, .timeSelect {
   padding: 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   border-radius: 12px;
   font-size: 1rem;
-  background: #fafafa;
-  color: #111;
+  background: var(--surface-muted);
+  color: var(--foreground);
   outline: none;
 }
 
 .dateInput:focus, .timeSelect:focus {
-  border-color: #111;
+  border-color: var(--primary);
 }
 
 /* Guest Selector */
@@ -108,12 +107,12 @@
 .guestInfo h3 {
   font-size: 1rem;
   font-weight: 600;
-  color: #222;
+  color: var(--foreground);
 }
 
 .guestInfo p {
   font-size: 0.8rem;
-  color: #888;
+  color: var(--foreground-muted);
 }
 
 .counter {
@@ -126,13 +125,13 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 1px solid #ddd;
-  background: white;
+  border: 1px solid var(--border);
+  background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  color: #111;
+  color: var(--foreground);
   cursor: pointer;
 }
 
@@ -153,7 +152,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 0;
-  color: #555;
+  color: var(--foreground-muted);
   font-size: 0.95rem;
 }
 
@@ -162,10 +161,10 @@
   justify-content: space-between;
   padding-top: 1rem;
   margin-top: 0.5rem;
-  border-top: 1px dashed #ddd;
+  border-top: 1px dashed var(--border);
   font-weight: 700;
   font-size: 1.2rem;
-  color: #111;
+  color: var(--foreground);
 }
 
 /* Bottom Bar */
@@ -174,7 +173,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: white;
+  background: var(--surface);
   padding: 1.2rem 1.5rem;
   box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
   z-index: 100;
@@ -184,7 +183,7 @@
 
 .payBtn {
   width: 100%;
-  background: #111;
+  background: var(--primary);
   color: white;
   padding: 1rem;
   border-radius: 20px;
@@ -196,6 +195,12 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(255, 106, 0, 0.3);
+  transition: opacity 0.2s;
+}
+
+.payBtn:active {
+  opacity: 0.9;
 }
 
 /* Desktop View Adjustments */
@@ -212,6 +217,6 @@
     transform: translateX(-50%);
     bottom: 20px;
     border-radius: 24px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-lg);
   }
 }

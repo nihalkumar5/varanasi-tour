@@ -97,6 +97,7 @@ export default function Home() {
 
       {/* Text & Actions */}
       <div className={styles.textContent}>
+        <span className={styles.brand}>Namaste</span>
         <h1 className={styles.title}>
           Discover the spiritual<br/>essence of Kashi!
         </h1>

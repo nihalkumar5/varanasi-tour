@@ -7,8 +7,7 @@
   margin: 0 auto;
   position: relative;
   box-shadow: 0 0 20px rgba(0,0,0,0.05);
-  background-color: #fcfcfc;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--background);
 }
 
 .header {
@@ -25,7 +24,7 @@
 
 .backBtn {
   font-weight: 600;
-  color: #111;
+  color: var(--foreground);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -36,7 +35,7 @@
 .header h1 {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #111;
+  color: var(--foreground);
   letter-spacing: -0.5px;
 }
 
@@ -57,17 +56,17 @@
   justify-content: space-between;
   align-items: center;
   font-size: 0.95rem;
-  color: #666;
+  color: var(--foreground-muted);
 }
 
 .filterBtn {
-  background: white;
-  border: 1px solid #eee;
+  background: var(--surface);
+  border: 1px solid var(--border);
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-weight: 600;
-  color: #111;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  color: var(--foreground);
+  box-shadow: var(--shadow-sm);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -81,10 +80,10 @@
 }
 
 .providerCard {
-  background: white;
+  background: var(--surface);
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
   text-decoration: none;
@@ -93,7 +92,7 @@
 
 .providerCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-lg);
 }
 
 .cardImgWrapper {
@@ -110,13 +109,13 @@
   position: absolute;
   top: 15px;
   right: 15px;
-  background: white;
-  color: #111;
+  background: var(--surface);
+  color: var(--foreground);
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-md);
   z-index: 2;
   display: flex;
   align-items: center;
@@ -124,7 +123,7 @@
 }
 
 .reviewsText {
-  color: #888;
+  color: var(--foreground-muted);
   font-weight: 500;
   font-size: 0.75rem;
 }
@@ -139,7 +138,7 @@
 .cardHeader h2 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #111;
+  color: var(--foreground);
   margin-bottom: 0.3rem;
 }
 
@@ -150,8 +149,8 @@
 }
 
 .tag {
-  background: #f5f5f5;
-  color: #555;
+  background: var(--surface-muted);
+  color: var(--foreground-muted);
   padding: 0.3rem 0.8rem;
   border-radius: 12px;
   font-size: 0.8rem;
@@ -164,7 +163,7 @@
   align-items: center;
   margin-top: 0.5rem;
   padding-top: 1rem;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border);
 }
 
 .priceInfo {
@@ -174,18 +173,18 @@
 
 .priceLabel {
   font-size: 0.8rem;
-  color: #888;
+  color: var(--foreground-muted);
   font-weight: 500;
 }
 
 .priceValue {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #111;
+  color: var(--foreground);
 }
 
 .bookBtn {
-  background: #111;
+  background: var(--primary);
   color: white;
   padding: 0.8rem 1.5rem;
   border-radius: 20px;
@@ -197,7 +196,7 @@
 }
 
 .bookBtn:hover {
-  background: #333;
+  background: var(--primary-dark);
 }
 
 /* Desktop View Adjustments */

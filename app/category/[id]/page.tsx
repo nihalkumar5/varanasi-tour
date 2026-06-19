@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./category.module.css";
 
 // This is a dynamic route for categories, e.g., /category/boat
@@ -77,11 +78,11 @@ export default async function CategoryPage({ params }: { params: Promise<{ id: s
           {providers.map((provider) => (
             <div key={provider.id} className={styles.providerCard}>
               <div className={styles.cardImgWrapper}>
-                <img 
-                  src={provider.image} 
-                  alt={provider.name} 
-                  className={styles.cardImg} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                <Image
+                  src={provider.image}
+                  alt={provider.name}
+                  fill
+                  className={styles.cardImg}
                 />
                 <div className={styles.ratingPill}>
                   ⭐ {provider.rating} <span className={styles.reviewsText}>({provider.reviews})</span>

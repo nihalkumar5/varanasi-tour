@@ -7,9 +7,8 @@
   margin: 0 auto;
   position: relative;
   overflow: hidden;
-  background-color: #FAF9F6;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: #111;
+  background-color: var(--background);
+  color: var(--foreground);
   padding: 24px;
 }
 
@@ -28,7 +27,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #111;
+  color: var(--foreground);
   display: flex;
   align-items: center;
 }
@@ -41,12 +40,12 @@
 /* Service Card */
 .serviceCard {
   display: flex;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.05);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 12px;
   margin-bottom: 24px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  box-shadow: var(--shadow-sm);
 }
 
 .serviceImgWrapper {
@@ -73,7 +72,7 @@
 
 .serviceLocation {
   font-size: 0.85rem;
-  color: #666;
+  color: var(--foreground-muted);
   margin-bottom: 8px;
 }
 
@@ -84,7 +83,7 @@
 
 .servicePrice span {
   font-weight: 400;
-  color: #666;
+  color: var(--foreground-muted);
   font-size: 0.8rem;
 }
 
@@ -98,7 +97,7 @@
 .label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #333;
+  color: var(--foreground);
   margin-bottom: 8px;
 }
 
@@ -111,26 +110,26 @@
 .input {
   width: 100%;
   padding: 14px 16px;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.05);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   font-size: 0.95rem;
-  color: #111;
+  color: var(--foreground);
   outline: none;
 }
 
 .input:focus {
-  border-color: #FF5A00;
+  border-color: var(--primary);
 }
 
 .input::placeholder {
-  color: #999;
+  color: var(--foreground-muted);
 }
 
 .inputIcon {
   position: absolute;
   right: 16px;
-  color: #666;
+  color: var(--foreground-muted);
   pointer-events: none;
 }
 
@@ -144,8 +143,8 @@ textarea.input {
 .counterWrapper {
   display: flex;
   align-items: center;
-  background: #FDFDFD;
-  border: 1px solid rgba(0,0,0,0.05);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
   width: fit-content;
@@ -160,7 +159,7 @@ textarea.input {
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  color: #333;
+  color: var(--foreground);
   cursor: pointer;
 }
 
@@ -168,7 +167,7 @@ textarea.input {
   width: 40px;
   text-align: center;
   font-weight: 600;
-  background: #fff;
+  background: var(--surface);
   height: 40px;
   display: flex;
   align-items: center;
@@ -178,7 +177,7 @@ textarea.input {
 /* Price Details */
 .priceSection {
   margin-top: 32px;
-  margin-bottom: 120px; /* Space for fixed button */
+  margin-bottom: 120px;
 }
 
 .priceRow {
@@ -186,7 +185,7 @@ textarea.input {
   justify-content: space-between;
   margin-bottom: 16px;
   font-size: 0.95rem;
-  color: #333;
+  color: var(--foreground);
 }
 
 .totalRow {
@@ -194,10 +193,10 @@ textarea.input {
   justify-content: space-between;
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px dashed rgba(0,0,0,0.1);
+  border-top: 1px dashed var(--border);
   font-size: 1.1rem;
   font-weight: 700;
-  color: #111;
+  color: var(--foreground);
 }
 
 /* Bottom Fixed Button */
@@ -208,14 +207,14 @@ textarea.input {
   transform: translateX(-50%);
   width: 100%;
   max-width: 480px;
-  padding: 16px 24px 32px 24px; /* extra bottom padding for mobile safe area */
-  background: linear-gradient(to top, #FAF9F6 80%, rgba(250, 249, 246, 0) 100%);
+  padding: 16px 24px 32px 24px;
+  background: linear-gradient(to top, var(--background) 80%, rgba(255, 247, 237, 0) 100%);
   z-index: 100;
 }
 
 .proceedBtn {
   width: 100%;
-  background: #4A1A1A; /* Dark brown/red from screenshot */
+  background: var(--primary);
   color: white;
   border: none;
   padding: 16px;
@@ -223,7 +222,7 @@ textarea.input {
   font-size: 1.05rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(74, 26, 26, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 106, 0, 0.3);
   transition: opacity 0.2s;
 }
 

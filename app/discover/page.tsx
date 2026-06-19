@@ -5,10 +5,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import FloatingFooter from "../components/FloatingFooter";
-import { Playfair_Display, Caveat } from "next/font/google";
-
-const playfair = Playfair_Display({ subsets: ["latin"], weight: ["700", "900"] });
-const caveat = Caveat({ subsets: ["latin"], weight: ["700"] });
 
 // Lucide/Material style SVGs
 const Icons = {
@@ -216,11 +212,11 @@ export default function Discover() {
           <div key={item.id} className={styles.popularCard}>
             
             <div className={styles.cardImageWrapper}>
-              <img 
-                src={item.image} 
-                alt={item.title} 
-                className={styles.popularCardImg} 
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className={styles.popularCardImg}
               />
             </div>
             
@@ -282,8 +278,8 @@ export default function Discover() {
         <div className={styles.heroOverlay}></div>
         
         <div className={styles.header}>
-          <div className={`${styles.logoText} ${playfair.className}`}>
-            via<span className={caveat.className}>Kashi</span>
+          <div className={styles.logoText}>
+            Namaste
           </div>
 
           <div className={styles.locationDropdownContainer}>
@@ -386,7 +382,7 @@ export default function Discover() {
 
         {/* Why viaKashi Section */}
         <div className={styles.whySection}>
-          <h3 className={styles.sectionTitle}>Why viaKashi?</h3>
+          <h3 className={styles.sectionTitle}>Why Namaste?</h3>
           <div className={styles.whyGrid}>
             <div className={styles.whyCard}>
               <div className={styles.whyIcon}>
@@ -426,13 +422,15 @@ export default function Discover() {
             {testimonials.map((testimonial) => (
               <div key={testimonial.id} className={styles.testimonialCard}>
                 <div className={styles.testimonialHeader}>
-                  <img src={testimonial.image} alt={testimonial.name} className={styles.testimonialAvatar} />
+                  <div className={styles.testimonialAvatarWrapper}>
+                    <Image src={testimonial.image} alt={testimonial.name} fill className={styles.testimonialAvatar} />
+                  </div>
                   <div>
                     <h4 className={styles.testimonialName}>{testimonial.name}</h4>
                     <p className={styles.testimonialRole}>{testimonial.role}</p>
                   </div>
                 </div>
-                <p className={styles.testimonialText}>"{testimonial.text}"</p>
+                <p className={styles.testimonialText}>&ldquo;{testimonial.text}&rdquo;</p>
               </div>
             ))}
           </div>
@@ -443,7 +441,7 @@ export default function Discover() {
       {/* Footer */}
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
-          <h3 className={`${styles.footerLogo} ${playfair.className}`}>via<span className={caveat.className}>Kashi</span></h3>
+          <h3 className={styles.footerLogo}>Namaste</h3>
           <p className={styles.footerDesc}>Your ultimate companion for exploring the spiritual capital of India.</p>
           <div className={styles.footerLinks}>
             <Link href="#">About Us</Link>
@@ -452,7 +450,7 @@ export default function Discover() {
             <Link href="#">Privacy Policy</Link>
           </div>
           <div className={styles.footerCopyright}>
-            © {new Date().getFullYear()} viaKashi. All rights reserved.
+            © {new Date().getFullYear()} Namaste. All rights reserved.
           </div>
         </div>
       </footer>
@@ -486,7 +484,7 @@ export default function Discover() {
         <div className={styles.hamburgerOverlay} onClick={() => setIsMenuOpen(false)}>
           <div className={styles.hamburgerDrawer} onClick={(e) => e.stopPropagation()}>
             <div className={styles.hamburgerHeader}>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#FF512F', margin: 0 }}>Varanasi<span style={{color: '#111'}}>Tour</span></h2>
+              <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary)', margin: 0 }}>Namaste</h2>
               <button className={styles.closeHamburgerBtn} onClick={() => setIsMenuOpen(false)}>
                 ✕
               </button>
@@ -536,7 +534,7 @@ export default function Discover() {
                 </div>
                 <div>
                   <h3 className={styles.userName}>Guest User</h3>
-                  <p className={styles.userPhone} style={{ color: "#FF512F", fontWeight: "bold", cursor: "pointer", marginTop: "4px" }}>Sign In to viaKashi</p>
+                  <p className={styles.userPhone} style={{ color: "var(--primary)", fontWeight: "bold", cursor: "pointer", marginTop: "4px" }}>Sign In to Namaste</p>
                 </div>
               </div>
               <button className={styles.closeHamburgerBtn} onClick={() => setIsProfileOpen(false)}>
@@ -607,7 +605,7 @@ export default function Discover() {
             </div>
             <h2 className={styles.modalTitle}>Where are you?</h2>
             <p className={styles.modalText}>
-              We couldn't detect your exact location automatically. Please select your current area:
+              We couldn&apos;t detect your exact location automatically. Please select your current area:
             </p>
             
             <div className={styles.fallbackList}>

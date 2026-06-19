@@ -1,36 +1,48 @@
+/* ============================================================
+   Namaste — Design Tokens (Saffron & Maroon)
+   Single source of truth. All pages should use var(--…).
+   ============================================================ */
 :root {
-  --background: #D9E8D4;
-  --foreground: #1A2F24;
-  --primary: #E0F672;
-  --primary-dark: #C6E04A;
-  --secondary: #B8CDB8;
-  --accent: #E0F672;
-  --surface: #C8DEC8;
-  --surface-hover: #D0E6D0;
-  --border: rgba(26, 47, 36, 0.1);
-  --radius: 24px;
-  --font-main: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
+  /* Surfaces */
+  --background: #FFF7ED;          /* cream page bg */
+  --surface: #FFFFFF;             /* cards */
+  --surface-muted: #FBF1E4;       /* inputs, subtle blocks */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1A2F24;
-    --foreground: #D9E8D4;
-    --primary: #E0F672; 
-    --primary-dark: #C6E04A;
-    --secondary: #2C4235; 
-    --accent: #E0F672; 
-    --surface: #253A2E;
-    --surface-hover: #2E4537;
-    --border: rgba(217, 232, 212, 0.1);
-  }
+  /* Text */
+  --foreground: #2B1B0E;          /* dark-brown body text */
+  --foreground-muted: #6B5B4E;    /* secondary text */
+
+  /* Brand */
+  --primary: #FF6A00;             /* saffron — buttons, pins, accents */
+  --primary-dark: #E55A00;        /* hover / active */
+  --deep: #7A1F1F;                /* maroon — footer, dark blocks */
+  --accent: #C9962B;              /* gold — highlights, stars */
+  --success: #10B981;             /* verified badge */
+
+  /* Lines */
+  --border: rgba(43, 27, 14, 0.10);
+
+  /* Radii */
+  --radius-sm: 14px;
+  --radius: 24px;
+  --radius-lg: 30px;
+
+  /* Gradients */
+  --gradient-brand: linear-gradient(135deg, #FF6A00 0%, #7A1F1F 100%);
+  --gradient-gold: linear-gradient(135deg, rgba(255, 106, 0, 0.10), rgba(201, 150, 43, 0.10));
+
+  /* Shadows (warm-tinted) */
+  --shadow-sm: 0 1px 2px 0 rgba(122, 31, 31, 0.06);
+  --shadow-md: 0 4px 12px -2px rgba(122, 31, 31, 0.08), 0 2px 6px -2px rgba(122, 31, 31, 0.06);
+  --shadow-lg: 0 12px 28px -6px rgba(122, 31, 31, 0.12), 0 4px 10px -4px rgba(122, 31, 31, 0.08);
+
+  /* Typography — single font */
+  --font-main: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 html {
   height: 100%;
+  color-scheme: light;
 }
 
 html,
@@ -67,18 +79,4 @@ button {
   border: none;
   background: none;
   font-family: inherit;
-}
-
-.glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }
