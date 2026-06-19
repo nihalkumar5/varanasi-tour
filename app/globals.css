@@ -4,9 +4,9 @@
    ============================================================ */
 :root {
   /* Surfaces */
-  --background: #FFF7ED;          /* cream page bg */
+  --background: #FCFCFD;          /* crisp clean background */
   --surface: #FFFFFF;             /* cards */
-  --surface-muted: #FBF1E4;       /* inputs, subtle blocks */
+  --surface-muted: #F3F4F6;       /* inputs, subtle blocks */
 
   /* Text */
   --foreground: #2B1B0E;          /* dark-brown body text */
@@ -57,7 +57,7 @@ body {
   display: flex;
   flex-direction: column;
   color: var(--foreground);
-  background-color: var(--background);
+  background-color: #E5E7EB; /* light neutral gray for desktop frame */
   font-family: var(--font-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

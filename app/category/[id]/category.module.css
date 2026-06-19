@@ -199,17 +199,3 @@
   background: var(--primary-dark);
 }
 
-/* Desktop View Adjustments */
-@media (min-width: 768px) {
-  .header {
-    padding: 2rem 4rem;
-  }
-  .main {
-    padding: 2rem 4rem;
-  }
-  .providerList {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 2rem;
-  }
-}
